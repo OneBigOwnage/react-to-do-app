@@ -1,25 +1,81 @@
-#tasks-panel {
-    width: 500px;
-    min-height: 700px;
-    box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.1);
-    border-radius: 4px 4px 0 0;
-    border-style: hidden;
+/* Helps with centering the panel on the page. */
+html, body, #root {
+    height: 100%;
+    overflow-y: hidden;
 }
 
+/* Center the panel on the middle of the page, and give the whole page a nice background. */
 #root {
     display: flex;
     align-items: center;
     justify-content: center;
+
+    background-image: linear-gradient(141deg,#009e6c 0,#00d1b2 71%,#00e7eb 100%);
+    background-color: #00d1b2;
 }
 
-html, body, #root {
-    height: 100%;
+
+
+#tasks-panel {
+    background-color: #fff;
+    box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.1);
+
+    border-radius: 4px 4px 0 0;
+    border-style: hidden;
+
+    max-height: calc(100vh - 40px);
+    max-width: 765px;
 }
 
+/* Split the task description from the controls, the controls also float to the right now. */
 .task {
     display: flex;
+    justify-content: space-between;
+}
+
+.task-description > p {
+    max-width: 500px;
+    word-wrap: break-word;
+    padding-right: 15px;
+}
+
+.task-is-done .task-description p {
+    text-decoration: line-through;
+    color: hsl(0, 0%, 86%);
+}
+
+.task-description {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.counter-button {
+    width: 25px;
 }
 
 .task-counter {
-    justify-self: end;
+    width: 35px;
+    font-weight: 600;
+    text-align: right;
+}
+
+.remove-item-btn {
+    width: 25px;
+    margin-left: 10px;
+}
+
+.task-options {
+    display: flex;
+    justify-content: center;
+}
+
+.task-options > div.field {
+    margin-bottom: 0;
+}
+
+.task-list {
+    max-height: calc(100vh - 200px);
+    overflow: auto;
+    min-height: 300px;
 }
