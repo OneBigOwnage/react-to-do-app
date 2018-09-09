@@ -1,18 +1,28 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import Task from './components/Task';
+import AddTask from './components/AddTask';
+import Title from './components/Title';
+import DefaultItems from './DefaultItems';
+
 
 class App extends Component {
+  addTask(task) {
+    DefaultItems.push(task);
+  }
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        <nav id="tasks-panel" className="panel">
+          <Title text="My personal todo list" />
+          <AddTask />
+
+          {
+            DefaultItems.map(task =>
+              <Task key={task.id} text={task.title} count={task.count} />
+            )
+          }
+
+        </nav>
       </div>
     );
   }

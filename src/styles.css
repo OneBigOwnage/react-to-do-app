@@ -1,0 +1,25 @@
+#tasks-panel {
+    width: 500px;
+    min-height: 700px;
+    box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.1);
+    border-radius: 4px 4px 0 0;
+    border-style: hidden;
+}
+
+#root {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+html, body, #root {
+    height: 100%;
+}
+
+.task {
+    display: flex;
+}
+
+.task-counter {
+    justify-self: end;
+}
