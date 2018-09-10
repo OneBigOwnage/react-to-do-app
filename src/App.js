@@ -2,29 +2,34 @@ import React, { Component } from 'react';
 import TaskList from './components/TaskList';
 import AddTask from './components/AddTask';
 import Title from './components/Title';
-import DefaultItems from './DefaultItems';
+import InitialState from './InitialState';
 
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      tasks: DefaultItems
+    this.state = InitialState;
+  }
+  getNewID = () => {
+    let ids = Array.from(this.state.tasks).map(task => task.id);
+
+    if (ids.length < 1) {
+      return 0;
     }
+
+    return ids.sort().pop() + 1;
   }
   addTask = (task) => {
-    // Magic!
-    let nextID = Number([...Object.keys(this.state.tasks).sort()].pop()) + 1;
-    let tasks = Object.assign({}, this.state.tasks);
-
-    tasks[nextID] = task;
+    task.id = this.getNewID();
+    let tasks = Array.from(this.state.tasks);
+    tasks.push(task);
 
     this.setState({ tasks: tasks });
   }
   removeTask = (taskID) => {
-    let state = Object.assign({}, this.state);
+    let tasks = Array.from(this.state.tasks);
+    tasks = tasks.filter(task => task.id !== Number(taskID));
 
-    delete state.tasks[taskID];
-    this.setState(state);
+    this.setState({tasks: tasks});
   }
   render() {
     return (

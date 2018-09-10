@@ -6,8 +6,8 @@ class TaskList extends Component {
         return (
             <div className="task-list">
                 {
-                    Object.keys(this.props.tasks).map(taskID =>
-                        <Task key={taskID} task={this.props.tasks[taskID]} taskID={taskID} removeTask={this.props.removeTask} />
+                    this.props.tasks.map(task =>
+                        <Task key={task.id} task={task} taskID={task.id} removeTask={this.props.removeTask} />
                     )
                 }
 
