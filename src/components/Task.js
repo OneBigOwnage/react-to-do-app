@@ -1,51 +1,44 @@
 import React, { Component } from 'react';
 
 class Task extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      done: props.task.done,
-      count: props.task.count,
-      id: props.taskID
-    };
-  }
   onCheck = () => {
-    this.setState({
-      done: !this.state.done
-    });
+    if (this.props.task.done) {
+      this.props.setTaskTodo(this.props.task);
+    } else {
+      this.props.setTaskDone(this.props.task);
+    }
+    // this.props.setTaskDone(this.props.task, !this.props.task.done);
   }
   getClass = (done) => {
-    let classes = ['panel-block task'];
+    let classes = ['panel-block', 'task'];
     if (done) {
       classes.push('task-is-done');
     }
     return classes.join(' ');
   }
   handleCounterChange = (e) => {
-    let count = this.state.count;
-
-    if (e.target.validity.valid) {
-      count = e.target.value;
-    }
-
-    this.setState({ count: count });
+    // Delegate to an existing function.
+    this.addRemoveCount(e.target.value);
   }
   addRemoveCount = amount => {
-    let newCount = Number(this.state.count) + amount;
+    let newCount = Number(this.props.task.count) + amount;
     if (/^[0-9]{0,3}$/.test(newCount)) {
-      this.setState({ count: newCount });
+      this.props.changeTaskCount(this.props.task, newCount);
     }
   }
+  changeTaskCount = (newCount) => {
+    let task = this.props.task;
+    this.props.changeTaskCount(task, newCount);
+  }
   removeTask = () => {
-    this.props.removeTask(this.state.id);
+    this.props.removeTask(this.props.task.id);
   }
   render() {
     return (
-      <div className={this.getClass(this.state.done)} >
+      <div className={this.getClass(this.props.task.done)} >
         <div className="task-description" >
-          <input type="checkbox" ref="isChecked" checked={this.state.done} onChange={this.onCheck} />
-          <p className={this.state.pClass} >{this.props.task.title}</p>
+          <input type="checkbox" checked={this.props.task.done} onChange={this.onCheck} />
+          <p>{this.props.task.title}</p>
         </div>
 
         <div className="task-options">
@@ -56,7 +49,7 @@ class Task extends Component {
               </a>
             </p>
             <p className="control">
-              <input className="input is-small task-counter" value={this.state.count} type="text" pattern="[0-9]{0,3}" onChange={this.handleCounterChange} />
+              <input className="input is-small task-counter" value={this.props.task.count} type="text" pattern="[0-9]{0,3}" onChange={this.handleCounterChange} />
             </p>
             <p className="control">
               <a className="button is-success is-small counter-button" onClick={() => { this.addRemoveCount(1) }}>

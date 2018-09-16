@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Task from './Task';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
+import TasksHelper from './../TasksHelper';
 
 class TaskList extends Component {
     constructor(props) {
@@ -12,8 +13,12 @@ class TaskList extends Component {
         if (!result.destination) {
             return;
         }
-        let tasks = this.reOrder(this.state.tasks, result.source.index, result.destination.index);
-        this.setState({ tasks: tasks });
+
+        let tasks = this.reOrder(this.props.tasks, result.source.index, result.destination.index);
+
+        if (TasksHelper.validateTaskList(tasks)) {
+            this.props.setTaskList(tasks);
+        }
     }
     reOrder = (list, startIndex, endIndex) => {
         const result = Array.from(list);
@@ -32,12 +37,6 @@ class TaskList extends Component {
 
         return style;
     }
-    addTask = (task) => {
-        const tasks = Array.from(this.state.tasks);
-        tasks.unshift(task);
-
-        this.setState({ tasks: tasks });
-    }
     render() {
         return (
             <div className="task-list">
@@ -47,7 +46,7 @@ class TaskList extends Component {
                         {(provided, snapshot) => (
                             <div
                                 ref={provided.innerRef}>
-                                {this.state.tasks.map((task, index) =>
+                                {this.props.tasks.map((task, index) =>
                                     <Draggable key={task.id} draggableId={task.id} index={index}>
                                         {(provided, snapshot) => (
                                             <div
@@ -59,7 +58,13 @@ class TaskList extends Component {
                                                     provided.draggableProps.style
                                                 )}
                                             >
-                                                <Task key={task.id} task={task} taskID={task.id} removeTask={this.props.removeTask} />
+                                                <Task
+                                                    key={task.id}
+                                                    task={task}
+                                                    removeTask={this.props.removeTask}
+                                                    setTaskDone={this.props.setTaskDone}
+                                                    setTaskTodo={this.props.setTaskTodo}
+                                                    changeTaskCount={this.props.changeTaskCount} />
                                             </div>
                                         )}
                                     </Draggable>
