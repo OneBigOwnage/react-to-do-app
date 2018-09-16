@@ -8,7 +8,8 @@ I used the CSS framework [Bulma](https://bulma.io).
 
 Follow these steps to use/preview this application:
 
-- Install [Git](https://git-scm.com/downloads) and npm, which comes with [nodejs](https://nodejs.org/en/).
+- Install [Git](https://git-scm.com/downloads).
+- Install npm, which comes with [nodejs](https://nodejs.org/en/).
 - Open up a command console, and type in `git clone https://github.com/OneBigOwnage/react-to-do-app.git`.
 - In the same window, type `npx serve react-to-do-app\build`.
 - Now open Chrome and go to the following URL: localhost:5000
