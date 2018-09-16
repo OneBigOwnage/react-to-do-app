@@ -6,8 +6,8 @@
 # testing
 /coverage
 
-# production
-/build
+# production would normally be excluded from repo.
+# /build
 
 # misc
 .DS_Store
